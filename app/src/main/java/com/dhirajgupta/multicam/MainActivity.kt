@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
      */
     val PERMREQ_CAMERA = 101
 
+    var saveDir = ""
+
     ////////////////////////////////// Activity Methods //////////////////////////////////////////
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.i("onCreate")
@@ -215,8 +217,8 @@ class MainActivity : AppCompatActivity() {
         )
         if (manager.cameraIdList.size >= 2) {
             camera1 = ManagedCamera(
-                manager.cameraIdList[1],
-                "Camera${manager.cameraIdList[1]}}",
+                manager.cameraIdList[2],
+                "Camera${manager.cameraIdList[2]}}",
                 view_finder_1,
                 cameraStatusHandler
             )
@@ -229,7 +231,11 @@ class MainActivity : AppCompatActivity() {
      */
     fun allPermissionsGranted(){
         //Pre-create the folder chain that will allow us to save an album into External Storage
-        val saveLocation = File(Environment.getExternalStorageDirectory(),"MultiCam")
+        Timber.i("Permissions : "+askAllRequiredPermissions())
+        Timber.i("STATE : " + Environment.getExternalStorageState());
+        val saveLocation = File(applicationContext.getExternalFilesDir(null),"MultiCam")
+        saveDir = saveLocation.absolutePath
+        Timber.i("STATE2 : " + saveLocation.exists())
         val success = saveLocation.mkdirs()
         Timber.i("Created folder:$success at $saveLocation")
 

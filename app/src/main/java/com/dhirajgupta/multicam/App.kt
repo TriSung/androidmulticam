@@ -1,6 +1,7 @@
 package com.dhirajgupta.multicam
 
 import android.app.Application
+import android.content.Context
 import android.media.MediaScannerConnection
 import timber.log.Timber
 
@@ -24,4 +25,5 @@ class App: Application() {
         lateinit var instance: App
             private set
     }
+    fun context(): Context = applicationContext
 }

@@ -2,6 +2,7 @@ package com.dhirajgupta.multicam.services
 
 import android.Manifest
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.*
@@ -15,7 +16,10 @@ import android.util.Size
 import android.util.SparseIntArray
 import android.view.Surface
 import android.view.TextureView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.dhirajgupta.multicam.App
+import com.dhirajgupta.multicam.MainActivity
 import com.dhirajgupta.multicam.interfaces.*
 import com.dhirajgupta.multicam.utils.CompareSizesByArea
 import com.dhirajgupta.multicam.views.AutoFitTextureView
@@ -25,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.coroutineContext
 import kotlin.math.roundToInt
 
 /**
@@ -290,7 +295,7 @@ class ManagedCamera(
      */
     private val onImageAvailableListener = ImageReader.OnImageAvailableListener {
         file = File(
-            Environment.getExternalStorageDirectory(),
+            App.instance.context().getExternalFilesDir(null),
             "MultiCam/Cam${systemId}-${filenameFormat.format(Calendar.getInstance().time)}.jpeg"
         )
 
